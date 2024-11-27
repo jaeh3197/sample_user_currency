@@ -6,7 +6,7 @@ import lombok.Getter;
 @Entity
 @Getter
 @Table(name = "user_currency")
-public class UserCurrency {
+public class UserCurrency extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
