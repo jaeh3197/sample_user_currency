@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/exchanges")
 @RequiredArgsConstructor
@@ -20,5 +22,11 @@ public class ExchangeController {
             @RequestBody ExchangeRequestDto exchangeRequestDto) {
 
         return ResponseEntity.ok().body(exchangeService.exchange(currencyId, exchangeRequestDto));
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<ExchangeResponseDto>> findExchanges(@PathVariable Long userId) {
+
+        return ResponseEntity.ok().body(exchangeService.findAll(userId));
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +52,12 @@ public class ExchangeService {
                 savedUserCurrency.getId(),
                 savedUserCurrency.getAmountAfterExchange()
         );
+    }
+
+    public List<ExchangeResponseDto> findAll(Long userId) {
+
+        List<UserCurrency> findExchange = userCurrencyRepository.findByUserId(userId);
+
+        return findExchange.stream().map(ExchangeResponseDto::toDto).toList();
     }
 }
