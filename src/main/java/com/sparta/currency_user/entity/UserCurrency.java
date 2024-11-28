@@ -3,10 +3,12 @@ package com.sparta.currency_user.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Table(name = "user_currency")
-public class UserCurrency {
+public class UserCurrency extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +22,13 @@ public class UserCurrency {
     @JoinColumn(name = "to_currency_id")
     private Currency currency;
 
-    private Long amountInKrw;
+    private BigDecimal amountInKrw;
 
-    private Long amountAfterExchange;
+    private BigDecimal amountAfterExchange;
 
     private String status;
 
-    public UserCurrency(User user, Currency currency, Long amountInKrw, Long amountAfterExchange, String status) {
+    public UserCurrency(User user, Currency currency, BigDecimal amountInKrw, BigDecimal amountAfterExchange, String status) {
         this.user = user;
         this.currency = currency;
         this.amountInKrw = amountInKrw;
@@ -35,5 +37,9 @@ public class UserCurrency {
     }
 
     public UserCurrency() {
+    }
+
+    public void cancelExchange() {
+        this.status = "cancelled";
     }
 }

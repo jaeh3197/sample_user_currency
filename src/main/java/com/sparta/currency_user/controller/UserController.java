@@ -3,8 +3,11 @@ package com.sparta.currency_user.controller;
 import com.sparta.currency_user.dto.UserRequestDto;
 import com.sparta.currency_user.dto.UserResponseDto;
 import com.sparta.currency_user.service.UserService;
+import com.sparta.currency_user.util.Validation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +30,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserResponseDto> createUser(
+            @Valid @RequestBody UserRequestDto userRequestDto,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            Validation.bindErrorMessage(bindingResult);
+        }
+
         return ResponseEntity.ok().body(userService.save(userRequestDto));
     }
 
