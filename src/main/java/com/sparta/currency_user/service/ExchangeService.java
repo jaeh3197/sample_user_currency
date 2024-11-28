@@ -48,10 +48,7 @@ public class ExchangeService {
 
         UserCurrency savedUserCurrency = userCurrencyRepository.save(userCurrency);
 
-        return new ExchangeResponseDto(
-                savedUserCurrency.getId(),
-                savedUserCurrency.getAmountAfterExchange()
-        );
+        return new ExchangeResponseDto(savedUserCurrency);
     }
 
     public List<ExchangeResponseDto> findAll(Long userId) {
@@ -59,5 +56,15 @@ public class ExchangeService {
         List<UserCurrency> findExchange = userCurrencyRepository.findByUserId(userId);
 
         return findExchange.stream().map(ExchangeResponseDto::toDto).toList();
+    }
+
+    @Transactional
+    public ExchangeResponseDto cancelExchange(Long id) {
+
+        UserCurrency findExchange = userCurrencyRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("요청을 찾을 수 없습니다."));
+
+        findExchange.cancelExchange();
+        return new ExchangeResponseDto(findExchange);
     }
 }

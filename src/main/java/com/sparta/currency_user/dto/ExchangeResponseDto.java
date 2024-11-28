@@ -12,15 +12,25 @@ public class ExchangeResponseDto {
 
     private BigDecimal exchange;
 
-    public ExchangeResponseDto(Long id, BigDecimal exchange) {
+    private String status;
+
+    public ExchangeResponseDto(UserCurrency userCurrency) {
+        this.id = userCurrency.getId();
+        this.exchange = userCurrency.getAmountAfterExchange();
+        this.status = userCurrency.getStatus();
+    }
+
+    public ExchangeResponseDto(Long id, BigDecimal exchange, String status) {
         this.id = id;
         this.exchange = exchange;
+        this.status = status;
     }
 
     public static ExchangeResponseDto toDto(UserCurrency userCurrency) {
         return new ExchangeResponseDto(
                 userCurrency.getId(),
-                userCurrency.getAmountAfterExchange()
+                userCurrency.getAmountAfterExchange(),
+                userCurrency.getStatus()
         );
     }
 }

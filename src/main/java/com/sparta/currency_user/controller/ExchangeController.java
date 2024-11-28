@@ -29,4 +29,10 @@ public class ExchangeController {
 
         return ResponseEntity.ok().body(exchangeService.findAll(userId));
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ExchangeResponseDto> updateExchange(@PathVariable Long id) {
+
+        return ResponseEntity.ok().body(exchangeService.cancelExchange(id));
+    }
 }

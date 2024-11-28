@@ -38,4 +38,8 @@ public class UserCurrency extends BaseEntity {
 
     public UserCurrency() {
     }
+
+    public void cancelExchange() {
+        this.status = "cancelled";
+    }
 }
