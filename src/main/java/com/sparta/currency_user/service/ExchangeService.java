@@ -5,6 +5,8 @@ import com.sparta.currency_user.dto.ExchangeResponseDto;
 import com.sparta.currency_user.entity.Currency;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.entity.UserCurrency;
+import com.sparta.currency_user.exception.CustomException;
+import com.sparta.currency_user.exception.ErrorCode;
 import com.sparta.currency_user.repository.CurrencyRepository;
 import com.sparta.currency_user.repository.UserCurrencyRepository;
 import com.sparta.currency_user.repository.UserRepository;
@@ -31,8 +33,11 @@ public class ExchangeService {
 
         BigDecimal amountInKrw = exchangeRequestDto.getAmountInKrw();
 
-        Currency findCurrency = currencyRepository.findById(currencyId).orElseThrow(() -> new IllegalArgumentException("통화를 찾을 수 없습니다."));
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+        Currency findCurrency = currencyRepository.findById(currencyId).orElseThrow(
+                () -> new CustomException(ErrorCode.CURRENCY_NOT_FOUND));
+
+        User findUser = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         BigDecimal exchangeRate = findCurrency.getExchangeRate();
 
@@ -62,7 +67,7 @@ public class ExchangeService {
     public ExchangeResponseDto cancelExchange(Long id) {
 
         UserCurrency findExchange = userCurrencyRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("요청을 찾을 수 없습니다."));
+                () -> new CustomException(ErrorCode.EXCHANGE_NOT_FOUND));
 
         findExchange.cancelExchange();
         return new ExchangeResponseDto(findExchange);
