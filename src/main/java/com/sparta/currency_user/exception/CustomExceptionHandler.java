@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomExceptionHandler {
     @ExceptionHandler(CustomException.class)
-    protected ResponseEntity<ErrorResponseEntity> handleCustomException(CustomException e){
+    protected ResponseEntity<ErrorResponseEntity> handleCustomException(CustomException e) {
         return ErrorResponseEntity.toResponseEntity(e.getErrorCode(), e.getDetailMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ErrorResponseEntity> handleValidationException(MethodArgumentNotValidException e){
+    protected ResponseEntity<ErrorResponseEntity> handleValidationException(MethodArgumentNotValidException e) {
         String detailMessage = e.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
@@ -29,7 +29,7 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ErrorResponseEntity> handleGeneralException(Exception e){
+    protected ResponseEntity<ErrorResponseEntity> handleGeneralException(Exception e) {
         return ErrorResponseEntity.toResponseEntity(ErrorCode.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다.");
     }
 

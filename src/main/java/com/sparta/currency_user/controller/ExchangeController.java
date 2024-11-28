@@ -16,6 +16,13 @@ public class ExchangeController {
 
     private final ExchangeService exchangeService;
 
+    /**
+     * 환전 요청 메서드
+     *
+     * @param currencyId         환전 대상 통화 식별자
+     * @param exchangeRequestDto 환전 요청 dto
+     * @return 환전 결과
+     */
     @PostMapping("/{currencyId}")
     public ResponseEntity<ExchangeResponseDto> exchangeCurrency(
             @PathVariable Long currencyId,
@@ -24,12 +31,24 @@ public class ExchangeController {
         return ResponseEntity.ok().body(exchangeService.exchange(currencyId, exchangeRequestDto));
     }
 
+    /**
+     * 환전 조회 메서드
+     *
+     * @param userId 고객 고유 식별자
+     * @return 조회 결과 목록
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<List<ExchangeResponseDto>> findExchanges(@PathVariable Long userId) {
 
         return ResponseEntity.ok().body(exchangeService.findAll(userId));
     }
 
+    /**
+     * 환전 취소 메서드
+     *
+     * @param id 환전 요청 고유 식별자
+     * @return 환전 취소 결과
+     */
     @PatchMapping("/{id}")
     public ResponseEntity<ExchangeResponseDto> updateExchange(@PathVariable Long id) {
 
