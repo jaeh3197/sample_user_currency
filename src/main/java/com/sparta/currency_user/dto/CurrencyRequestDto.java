@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
+//Bean Validation 적용
 @Getter
 public class CurrencyRequestDto {
 

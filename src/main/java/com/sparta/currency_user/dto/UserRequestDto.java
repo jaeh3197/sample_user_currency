@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
+//Bean Validation 적용
 @Getter
 public class UserRequestDto {
 

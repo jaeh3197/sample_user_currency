@@ -29,10 +29,10 @@ public class CurrencyResponseDto {
 
     public static CurrencyResponseDto toDto(Currency currency) {
         return new CurrencyResponseDto(
-            currency.getId(),
-            currency.getCurrencyName(),
-            currency.getExchangeRate(),
-            currency.getSymbol()
+                currency.getId(),
+                currency.getCurrencyName(),
+                currency.getExchangeRate(),
+                currency.getSymbol()
         );
     }
 }
