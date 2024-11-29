@@ -28,11 +28,15 @@ public class DataInitializer {
         Currency currency1 = new Currency("USD", new BigDecimal("1430.00"), "$");
         Currency currency2 = new Currency("USD", new BigDecimal("1400.00"), "$");
         Currency currency3 = new Currency("USD", new BigDecimal("-1"), "$");
+        Currency currency4 = new Currency("JPY", new BigDecimal("9"), "円");
+        Currency currency5 = new Currency("EUR", new BigDecimal("1474.54"), "€");
 
         //repository 에 저장
         currencyRepository.save(currency1);
         currencyRepository.save(currency2);
         currencyRepository.save(currency3);
+        currencyRepository.save(currency4);
+        currencyRepository.save(currency5);
 
         //저장된 테이블 검증
         for (Currency currency : currencyRepository.findAll()) {
