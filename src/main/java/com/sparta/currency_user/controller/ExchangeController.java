@@ -2,6 +2,7 @@ package com.sparta.currency_user.controller;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserExchangeDto;
 import com.sparta.currency_user.service.ExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +54,17 @@ public class ExchangeController {
     public ResponseEntity<ExchangeResponseDto> updateExchange(@PathVariable Long id) {
 
         return ResponseEntity.ok().body(exchangeService.cancelExchange(id));
+    }
+
+    /**
+     * 환전 그룹 조회 메서드
+     *
+     * @param userId 고객 고유 식별자
+     * @return 환전 그룹 조회 결과
+     */
+    @GetMapping("/user-currencies/{userId}")
+    public ResponseEntity<List<UserExchangeDto>> findUserCurrencies(@PathVariable Long userId) {
+
+        return ResponseEntity.ok().body(exchangeService.findUserCurrencies(userId));
     }
 }

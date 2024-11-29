@@ -18,17 +18,23 @@ public class DataInitializer {
     @Autowired
     private CurrencyRepository currencyRepository;
 
+    /**
+     * 구동시 환율 테이블 생성
+     */
     @PostConstruct
     public void init() {
 
-        Currency currency1 = new Currency("USD", new BigDecimal("-1"), "$");
+        //환율 객체 생성
+        Currency currency1 = new Currency("USD", new BigDecimal("1430.00"), "$");
         Currency currency2 = new Currency("USD", new BigDecimal("1400.00"), "$");
-        Currency currency3 = new Currency("USD", new BigDecimal("1380.00"), "$");
+        Currency currency3 = new Currency("USD", new BigDecimal("-1"), "$");
 
-//        currencyRepository.save(currency1);
-//        currencyRepository.save(currency2);
-//        currencyRepository.save(currency3);
+        //repository 에 저장
+        currencyRepository.save(currency1);
+        currencyRepository.save(currency2);
+        currencyRepository.save(currency3);
 
+        //저장된 테이블 검증
         for (Currency currency : currencyRepository.findAll()) {
             int result = currency.getExchangeRate().compareTo(BigDecimal.ZERO);
             if (result <= 0) {
