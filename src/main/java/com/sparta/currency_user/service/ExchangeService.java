@@ -50,11 +50,20 @@ public class ExchangeService {
         User findUser = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        //조회한 통화에서 환율 조회
+        //조회한 통화에서 환율, 통화 이름 조회
         BigDecimal exchangeRate = findCurrency.getExchangeRate();
+        String currencyName = findCurrency.getCurrencyName();
+
+        //변수 생성
+        BigDecimal amountAfterExchange = null;
 
         //환전 후 금액 계산
-        BigDecimal amountAfterExchange = amountInKrw.divide(exchangeRate, 2, BigDecimal.ROUND_HALF_UP);
+        if (currencyName.equals("USD") || currencyName.equals("EUR")) {
+            amountAfterExchange = amountInKrw.divide(exchangeRate, 2, BigDecimal.ROUND_HALF_UP);
+        } else if (currencyName.equals("JPY")) {
+            amountAfterExchange = amountInKrw.divide(exchangeRate, BigDecimal.ROUND_HALF_UP);
+        }
+
 
         //새로운 UserCurrency 객체 생성
         UserCurrency userCurrency = new UserCurrency(
