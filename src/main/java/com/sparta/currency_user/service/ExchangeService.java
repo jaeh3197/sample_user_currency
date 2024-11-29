@@ -2,6 +2,7 @@ package com.sparta.currency_user.service;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserExchangeDto;
 import com.sparta.currency_user.entity.Currency;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.entity.UserCurrency;
@@ -102,5 +103,16 @@ public class ExchangeService {
         findExchange.cancelExchange();
 
         return new ExchangeResponseDto(findExchange);
+    }
+
+    /**
+     * 환전 그룹 조회 로직
+     *
+     * @param userId 고객 고유 식별자
+     * @return 환전 그룹 조회 결과
+     */
+    public List<UserExchangeDto> findUserCurrencies(Long userId) {
+
+        return userCurrencyRepository.findUserCurrencies(userId);
     }
 }
